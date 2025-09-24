@@ -23,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $especialidades = ['Pediatra', 'Ortopedista', 'Gastro', 'Urologista'];
+        $especialidades = ["Cardiologia", "Pediatria", "Dermatologia", "Ginecologia", "Ortopedia", "Neurologia", "Psiquiatria", "Urologia", "Geral"];
 
         return [
             'name' => fake()->name(),

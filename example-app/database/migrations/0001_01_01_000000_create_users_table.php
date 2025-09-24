@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('especialidade', ['Pediatra', 'Ortopedista', 'Gastro', 'Urologista']);
-            $table->rememberToken();
+            $table->enum('especialidade', ["Cardiologia", "Pediatria", "Dermatologia", "Ginecologia", "Ortopedia", "Neurologia", "Psiquiatria", "Urologia", "Geral"])->default('Geral');
             $table->timestamps();
         });
 
