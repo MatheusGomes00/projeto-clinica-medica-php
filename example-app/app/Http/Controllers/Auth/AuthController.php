@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $query = http_build_query([
             'client_id' => config('services.passport.client_id'),
-            'redirect_uri' => config('services.passport.redirect'),
+            'redirect_uri' => config('services.passport.redirect_uri'),
             'response_type' => 'code',
             'scope' => '',
             'state' => $state,
@@ -36,21 +36,21 @@ class AuthController extends Controller
 
     public function callback(Request $request)
     {
-
-        $sessionState = $request->session()->get('state');
+        try{
+        $sessionState = $request->session()->pull('state');
         $requestState = $request->state;
-
+        //dd($sessionState, $requestState);
         if (!$sessionState || $sessionState != $requestState) {
             Auth::logout();
             return redirect('/login')->withErrors(['error' => 'Falha na autenticação. Estados incorretos']);
 
         }
 
-        $response = Http::asForm()->post(config('app.url') . '/oauth/token', [
+        $response = Http::asForm()->post('http://localhost:8000/oauth/token', [
             'grant_type' => 'authorization_code',
             'client_id' => config('services.passport.client_id'),
             'client_secret' => config('services.passport.client_secret'),
-            'redirect_uri' => config('services.passport.redirect'),
+            'redirect_uri' => config('services.passport.redirect_uri'),
             'code' => $request->code,
         ]);
 
@@ -60,9 +60,10 @@ class AuthController extends Controller
 
         return $response->json();
 
-
-
-        // redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            redirect()->route('dashboard');
+            return redirect('dashboard')->withErrors(['Será que foi?'=> $e->getMessage()]);
+        }
     }
 
     public function refreshToken(Request $request)

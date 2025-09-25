@@ -38,7 +38,7 @@ return [
     'passport' => [
         'client_id' => env('PASSPORT_CLIENT_ID'),
         'client_secret' => env('PASSPORT_CLIENT_SECRET'),
-        'redirect' => env('PASSPORT_REDIRECT_URI'),
+        'redirect_uri' => env('PASSPORT_REDIRECT_URI'),
     ]
 
 ];

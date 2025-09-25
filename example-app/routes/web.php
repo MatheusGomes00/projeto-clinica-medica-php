@@ -32,11 +32,17 @@ Route::middleware('guest')->group(function() {
         ]);
     });
 
-    Route::get('/auth/redirect', [AuthController::class,'redirectToAuthorization'])->name('auth.redirect');
 
+    Route::get('/auth/callback', [AuthController::class,'callback'])->name('auth.callback');
     Route::get('/register', [RegisterController::class,'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class,'register']);
 });
+
+Route::get('/auth/redirect', [AuthController::class,'redirectToAuthorization'])->name('auth.redirect');
+
+Route::get('/auth/refresh', [AuthController::class,'refreshToken']);
+
+
 
 Route::middleware('auth:web')->group(function() {
     Route::get('/dashboard', function() {
@@ -50,10 +56,12 @@ Route::middleware('auth:web')->group(function() {
         $request->session()->regenerateToken();
         return redirect('/login');
     })->name('logout');
+
+    Route::get('/cadastrarPaciente', function() {
+        return view('pacientes.CadastrarPacientes');
+    })->name('cadastrarPaciente');
+
+    
 });
-
-//Route::get('/auth/callback', [AuthController::class,'callback'])->name('auth.callback');
-
-Route::get('/auth/refresh', [AuthController::class,'refreshToken']);
 
 
