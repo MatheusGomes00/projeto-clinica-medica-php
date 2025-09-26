@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Http\Controllers;
+
+
 use App\Http\Controllers\Controller;
 use App\Services\PacientesService;
 use Illuminate\Http\Request;
@@ -13,20 +16,31 @@ class PacientesController extends Controller
         $this->pacientesService = $pacientesService;
     }
 
-    public function create() {
-        return view('Pacientes');
+    public function telaPacientes()
+    {
+        return view('pacientes.pacientes');
+    }
+
+    public function createView() {
+        return view('pacientes.CadastrarPacientes');
     }
 
     public function cadastrarPaciente(Request $request) {
         $validated = $request->validate([
-            'name' => 'required', 'string', 'max:100',
-            'telefone' => 'required', 'string', 'max:20',
-            'email' => 'nullable', 'string', 'min:100',
-            'data_nascimento' => 'required', 'date',
+            'nome' => 'required|string|max:255',
+            'telefone' => 'required|string|max:20',
+            'email' => 'nullable|email',
+            'data_nascimento' => 'required|date'
         ]);
 
-        $response = $this->pacientesService->cadastrarPaciente($validated);
-        return redirect()->back()->with('success', $response);
+        $this->pacientesService->cadastrarPaciente($validated);
+        return view('dashboard');
     }
+
+    public function buscarPacientes(Request $request) {
+        $pacientes = $this->pacientesService->buscarPacientes($request);
+        return view('pacientes.pacientes', compact('pacientes'));
+    }
+
 
 }

@@ -1,192 +1,146 @@
-{{-- paciente.blade.php --}}
 @extends('app')
 
 @section('title', 'Cadastro de Paciente')
 
 @section('content')
-{{-- Container principal com gradiente suave --}}
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8">
+<div class="container-fluid py-4 bg-light min-vh-100">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
 
-    {{-- Container centralizado com largura máxima --}}
-    <div class="max-w-lg mx-auto">
-
-        {{-- Cabeçalho com ícone e título --}}
-        <div class="text-center mb-8">
-            {{-- Ícone circular com gradiente --}}
-            <div class="mx-auto w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+            {{-- Cabeçalho --}}
+            <div class="text-center mb-5">
+                <div class="mx-auto bg-primary bg-gradient rounded-circle d-flex align-items-center justify-content-center mb-4"
+                     style="width: 80px; height: 80px;">
+                    <i class="bi bi-person-plus text-white display-6"></i>
+                </div>
+                <h1 class="h2 fw-bold text-dark mb-2">Cadastro de Paciente</h1>
+                <p class="text-muted lead">Preencha os dados do novo paciente</p>
             </div>
 
-            {{-- Título e descrição --}}
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Cadastro de Paciente</h1>
-            <p class="text-gray-600 text-lg">Preencha os dados do novo paciente</p>
-        </div>
+            {{-- Card do formulário --}}
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST" action="{{ route('cadastrarPaciente') }}">
+                        @csrf
 
-        {{-- Card do formulário com sombra e bordas suaves --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sm:p-8">
+                        {{-- Campo Nome --}}
+                        <div class="mb-4">
+                            <label for="nome" class="form-label fw-semibold">
+                                Nome Completo <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="nome"
+                                   name="nome"
+                                   required
+                                   class="form-control form-control-lg @error('nome') is-invalid @enderror"
+                                   placeholder="Digite o nome completo"
+                                   value="{{ old('nome') }}">
+                            @error('nome')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-            {{-- Formulário com espaçamento entre os campos --}}
-            <form method="POST" action="{{ route('cadastrarPaciente') }}" class="space-y-6">
-                @csrf
+                        {{-- Campo Telefone --}}
+                        <div class="mb-4">
+                            <label for="telefone" class="form-label fw-semibold">
+                                Telefone <span class="text-danger">*</span>
+                            </label>
+                            <input type="tel"
+                                   id="telefone"
+                                   name="telefone"
+                                   required
+                                   class="form-control form-control-lg @error('telefone') is-invalid @enderror"
+                                   placeholder="(11) 99999-9999"
+                                   value="{{ old('telefone') }}">
+                            @error('telefone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                {{-- Campo Nome --}}
-                <div>
-                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nome Completo *
-                    </label>
-                    <input type="text"
-                           id="nome"
-                           name="nome"
-                           required
-                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400"
-                           placeholder="Digite o nome completo"
-                           value="{{ old('nome') }}">
-                    {{-- Exibição de erro de validação --}}
-                    @error('nome')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                        {{-- Campo Email --}}
+                        <div class="mb-4">
+                            <label for="email" class="form-label fw-semibold">
+                                E-mail
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                   placeholder="paciente@exemplo.com"
+                                   value="{{ old('email') }}">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Campo Data de Nascimento --}}
+                        <div class="mb-4">
+                            <label for="data_nascimento" class="form-label fw-semibold">
+                                Data de Nascimento <span class="text-danger">*</span>
+                            </label>
+                            <input type="date"
+                                   id="data_nascimento"
+                                   name="data_nascimento"
+                                   required
+                                   class="form-control form-control-lg @error('data_nascimento') is-invalid @enderror"
+                                   value="{{ old('data_nascimento') }}"
+                                   max="{{ date('Y-m-d') }}">
+                            @error('data_nascimento')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Botões --}}
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-end pt-3">
+                            <button type="button"
+                                    onclick="window.history.back()"
+                                    class="btn btn-outline-secondary btn-lg flex-md-fill">
+                                <i class="bi bi-x-circle me-2"></i>
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg flex-md-fill">
+                                <i class="bi bi-check-circle me-2"></i>
+                                Cadastrar Paciente
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-                {{-- Campo Telefone --}}
-                <div>
-                    <label for="telefone" class="block text-sm font-medium text-gray-700 mb-2">
-                        Telefone *
-                    </label>
-                    <input type="tel"
-                           id="telefone"
-                           name="telefone"
-                           required
-                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400"
-                           placeholder="(11) 99999-9999"
-                           value="{{ old('telefone') }}">
-                    @error('telefone')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Campo Email (opcional) --}}
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        E-mail
-                    </label>
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400"
-                           placeholder="paciente@exemplo.com"
-                           value="{{ old('email') }}">
-                    @error('email')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Campo Data de Nascimento --}}
-                <div>
-                    <label for="data_nascimento" class="block text-sm font-medium text-gray-700 mb-2">
-                        Data de Nascimento *
-                    </label>
-                    <input type="date"
-                           id="data_nascimento"
-                           name="data_nascimento"
-                           required
-                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-gray-700"
-                           value="{{ old('data_nascimento') }}"
-                           max="{{ date('Y-m-d') }}">
-                    @error('data_nascimento')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Container dos botões com espaçamento --}}
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-
-                    {{-- Botão Cadastrar (primário) --}}
-                    <button type="submit"
-                            class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center">
-                        {{-- Ícone de check --}}
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Cadastrar Paciente
-                    </button>
-
-                    {{-- Botão Cancelar (secundário) --}}
-                    <button type="button"
-                            onclick="window.history.back()"
-                            class="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center justify-center">
-                        {{-- Ícone de x --}}
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        {{-- Nota sobre campos obrigatórios --}}
-        <div class="mt-6 text-center text-sm text-gray-500">
-            <p>* Campos obrigatórios</p>
+            {{-- Nota sobre campos obrigatórios --}}
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    <span class="text-danger">*</span> Campos obrigatórios
+                </small>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card {
+        border: none;
+    }
+    .form-control-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    .bg-gradient {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 @endsection
 
 @section('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Máscara para telefone
-    const telefoneInput = document.getElementById('telefone');
 
-    telefoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-
-        // Aplica máscara para telefones brasileiros
-        if (value.length <= 11) {
-            if (value.length === 11) {
-                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-            } else if (value.length === 10) {
-                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-            }
-
-            e.target.value = value;
-        }
-    });
-
-    // Validação básica do formulário
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', function(e) {
-        const nome = document.getElementById('nome').value.trim();
-        const telefone = document.getElementById('telefone').value.trim();
-        const dataNascimento = document.getElementById('data_nascimento').value;
-
-        // Validação de campos obrigatórios
-        if (!nome) {
-            e.preventDefault();
-            alert('Por favor, preencha o nome do paciente.');
-            document.getElementById('nome').focus();
-            return;
-        }
-
-        // Remove caracteres não numéricos para validar telefone
-        const telefoneLimpo = telefone.replace(/\D/g, '');
-        if (!telefoneLimpo || telefoneLimpo.length < 10) {
-            e.preventDefault();
-            alert('Por favor, preencha um telefone válido.');
-            document.getElementById('telefone').focus();
-            return;
-        }
-
-        if (!dataNascimento) {
-            e.preventDefault();
-            alert('Por favor, selecione a data de nascimento.');
-            document.getElementById('data_nascimento').focus();
-            return;
-        }
-    });
-});
 </script>
 @endsection

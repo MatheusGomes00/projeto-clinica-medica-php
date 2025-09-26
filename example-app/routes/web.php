@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PacientesController;
+use App\Http\Controllers\AgendaController;
+
 
 Route::get('/', function() {
     return Auth::check() ? redirect('/dashboard') : redirect('/login');
@@ -57,11 +60,12 @@ Route::middleware('auth:web')->group(function() {
         return redirect('/login');
     })->name('logout');
 
-    Route::get('/cadastrarPaciente', function() {
-        return view('pacientes.CadastrarPacientes');
-    })->name('cadastrarPaciente');
+    // Route::get('/pacientes', [PacientesController::class,'telaPacientes'])->name('pacientesView');
+    Route::get('/buscarPacientes', [PacientesController::class,'buscarPacientes'])->name('buscarPacientes');
+    Route::get('/cadastrarPaciente', [PacientesController::class, 'createView']);
+    Route::post('/cadastrarPaciente', [PacientesController::class, 'cadastrarPaciente'])->name('cadastrarPaciente');
 
-    
+    Route::get('/agendamentos/calendario', [AgendaController::class, 'retornarAgendamentos'])->name('agendamentos.calendario');
 });
 
 
