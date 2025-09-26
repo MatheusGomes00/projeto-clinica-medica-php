@@ -1,30 +1,35 @@
-# Clínica Médica - Sistema para Agendamento de Pacientes
+# Clínica Médica - Sistema para Agendamento de Consultas
 
-Este projeto é um sistema web para uma clínica médica, desenvolvido em [Laravel](https://laravel.com/) e utilizando [Laravel Passport](https://laravel.com/docs/10.x/passport) para autenticação OAuth2 baseada em Authorization Code.
-
-## Funcionalidades
-
-- Cadastro e login de usuários
-- Autenticação segura via OAuth2 (Authorization Code)
-- Integração com Laravel Passport
-- Painel de dashboard (em desenvolvimento)
-- Fluxo de autorização e callback totalmente integrado
-- Tokens de acesso e refresh gerenciados no frontend
+Este projeto é um sistema web de clínica médica, para gerenciamento de médicos, pacientes e agendamentos.
 
 ## Tecnologias Utilizadas
 
-- PHP 8.x
-- Laravel 10.x
+- PHP 8.4.12
+- Composer
+- Laravel 12.x
 - Laravel Passport
+- Laravel Sail
+- MySQL
+- Blade Templates
 - Bootstrap 5
-- JavaScript (ES6)
-- MySQL ou PostgreSQL
 
-## Instalação
+## Funcionalidades
+
+- Cadastro e login de Médicos/Users
+- Cadastro e listagem de pacientes
+- Autenticação por sessão
+- Painel de dashboard (em desenvolvimento)
+- Busca parametrizada e edição de pacientes (em desenvolvimento)
+- Gerenciamento de agendamentos (em desenvolvimento)
+- Edição de cadastro de médicos (em desenvolvimento)
+- Segurança, autenticação e autorização de usuários com Laravel Passport (em desenvolvimento)
+- Containerização utilizando Laravel Sail (em desenvolvimento)
+
+## Instalação e Execução
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/seu-repo.git
+   git clone https://github.com/MatheusGomes00/projeto-clinica-medica-php.git
    cd seu-repo
    ```
 
