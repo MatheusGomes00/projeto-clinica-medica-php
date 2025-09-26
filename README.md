@@ -1,4 +1,4 @@
-# Clínica Médica - Sistema de Autenticação OAuth2 com Laravel Passport
+# Clínica Médica - Sistema para Agendamento de Pacientes
 
 Este projeto é um sistema web para uma clínica médica, desenvolvido em [Laravel](https://laravel.com/) e utilizando [Laravel Passport](https://laravel.com/docs/10.x/passport) para autenticação OAuth2 baseada em Authorization Code.
 
